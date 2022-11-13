@@ -1,7 +1,10 @@
 (x=1760, y=598) -- coordinates for bag
 (x=1483, y=687) --  rod throw cordinates
 (1399, 688, 1825, 1100) -- position of jump/fish button
-(867, 241, 1006, 625) , size = 200,300 -- positon of ! mark on top of player model
+(902, 289, 964, 389) , size = 200,300 -- positon of ! mark on top of player model
 
 im1 = pyautogui.screenshot(region=(1493, 756, 250, 250))
 im1.save(r"C:\Users\lenev\OneDrive\Documents\pt_autofish\test2.png")
+
+cv.TM_SQDIFF_NORMED -- use this mode for alert 
+cv.TM_CCOEFF_NORMED -- use this mode for jump/fish

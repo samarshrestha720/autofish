@@ -12,18 +12,18 @@ print(pyautogui.position())
 
 
 # load on what to search image
-jmp_ss = ImageGrab.grab(bbox=(858, 259, 1007, 438))
+jmp_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
 jmp_haystack = np.array(jmp_ss)
 
 # load img to be searched
-jmp_needle = cv.imread('alert.png', cv.IMREAD_COLOR)
+jmp_needle = cv.imread('fish.png', cv.IMREAD_COLOR)
 
 # match the image --- "find needle in the haystack"
 result_jmp = cv.matchTemplate(jmp_haystack, jmp_needle, cv.TM_CCOEFF_NORMED)
 
 min_val, max_val, min_loc, max_loc = cv.minMaxLoc(result_jmp)
 print("Max location = ", str(max_loc))
-print("Max Value = " + str(max_val))
+print("Max Value = " + str(min_val))
 
 cv.imshow('Result', result_jmp)
 cv.waitKey()
