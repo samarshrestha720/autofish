@@ -1,11 +1,29 @@
 import pyautogui
+from PIL import ImageGrab
 import time
+import cv2 as cv
+import numpy as np
 
 
 time.sleep(5)
+#img = ImageGrab.grab(bbox=(1493, 756, 1743, 1006))
+# img.show()
 print(pyautogui.position())
-# (x=1483, y=687) --  rod throw cordinates
-# (x=1493, y=756) -- position of jump/fish button
-# (867, 241) -- positon of ! mark on top of player model
-#im1 = pyautogui.screenshot(region=(1493, 756, 250, 250))
-# im1.save(r"C:\Users\lenev\OneDrive\Documents\pt_autofish\test2.png")
+
+
+# load on what to search image
+jmp_ss = ImageGrab.grab(bbox=(858, 259, 1007, 438))
+jmp_haystack = np.array(jmp_ss)
+
+# load img to be searched
+jmp_needle = cv.imread('alert.png', cv.IMREAD_COLOR)
+
+# match the image --- "find needle in the haystack"
+result_jmp = cv.matchTemplate(jmp_haystack, jmp_needle, cv.TM_CCOEFF_NORMED)
+
+min_val, max_val, min_loc, max_loc = cv.minMaxLoc(result_jmp)
+print("Max location = ", str(max_loc))
+print("Max Value = " + str(max_val))
+
+cv.imshow('Result', result_jmp)
+cv.waitKey()
