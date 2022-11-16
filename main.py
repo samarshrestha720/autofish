@@ -25,6 +25,7 @@ def checkJump():
     return jmax_val
 
 
+rod = 26
 while True:
     # grabbing ss of the fish and alert
     fish_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
@@ -45,6 +46,19 @@ while True:
     amin_val, amax_val, amin_loc, amax_loc = cv.minMaxLoc(result_alert)
     fmin_val, fmax_val, fmin_loc, fmax_loc = cv.minMaxLoc(result_fish)
 
+    if (rod == 35):
+        pyautogui.click(1749, 607)  # click the bag icon
+        time.sleep(0.5)
+        pyautogui.click(1370, 516)  # click repair icon
+        time.sleep(0.5)
+        pyautogui.click(1040, 805)  # click the 500 money icon
+        time.sleep(0.5)
+        pyautogui.click(1030, 818)  # click yes
+        time.sleep(0.3)
+        pyautogui.click(959, 659)  # get out of bag
+        time.sleep(0.3)
+        rod = 0
+
     if (fmax_val > 0.6):  # check if fish icon matches
         print("In Water !!")
         if (amin_val < 0.2):  # check if fish is hooked
@@ -56,5 +70,6 @@ while True:
         print("Throwing hook in water!")
         pyautogui.click(1466, 693)  # click the throw hook button
     else:
-        pyautogui.click(1290, 855)
+        pyautogui.click(1429, 848)
+        rod += 1
         time.sleep(0.5)
