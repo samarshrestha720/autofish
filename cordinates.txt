@@ -2,9 +2,14 @@
 (x=1483, y=687) --  rod throw cordinates
 (1399, 688, 1825, 1100) -- position of jump/fish button
 (902, 289, 964, 389) , size = 200,300 -- positon of ! mark on top of player model
+store_haystack cordinates -- (1268, 745, 1750, 913)
 
 im1 = pyautogui.screenshot(region=(1493, 756, 250, 250))
 im1.save(r"C:\Users\lenev\OneDrive\Documents\pt_autofish\test2.png")
 
 cv.TM_SQDIFF_NORMED -- use this mode for alert -> minvalue is accurate
 cv.TM_CCOEFF_NORMED -- use this mode for jump/fish -> maxvalue is accurate
+
+Fish Loctions ALERT cordinates:
+(848, 291, 1000, 397) -- FishingLocation\atlantic.png
+(902, 289, 964, 389) -- FishingLocation\home.png
