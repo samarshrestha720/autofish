@@ -15,7 +15,7 @@ alert_needle = cv.imread('alert.png', cv.IMREAD_COLOR)
 jump_needle = cv.imread('jump1.png', cv.IMREAD_COLOR)
 store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
 
-rod = 0
+rod = 90
 
 
 def checkJump():
@@ -40,7 +40,7 @@ def checkStore():
 
 def fixRod():
     pyautogui.click(1749, 607)  # click the bag icon
-    time.sleep(0.5)
+    time.sleep(1)
     pyautogui.click(1370, 516)  # click repair icon
     time.sleep(1)
     pyautogui.click(1040, 805)  # click the 500 money icon
@@ -48,7 +48,7 @@ def fixRod():
     pyautogui.click(833, 811)  # click yes
     time.sleep(1)
     pyautogui.click(833, 811)  # get out of bag
-    time.sleep(0.5)
+    time.sleep(1)
 
 
 while True:
@@ -71,9 +71,9 @@ while True:
     amin_val, amax_val, amin_loc, amax_loc = cv.minMaxLoc(result_alert)
     fmin_val, fmax_val, fmin_loc, fmax_loc = cv.minMaxLoc(result_fish)
 
-    if (rod == 36):
+    if (rod == 0):
         fixRod()
-        rod = 0
+        rod = 45
 
     if (fmax_val > 0.6):  # check if fish icon matches
         print("In Water !!")
@@ -88,5 +88,5 @@ while True:
         pyautogui.click(1466, 693)  # click the throw hook button
     elif (checkStore() > 0.7):
         pyautogui.click(1429, 848)
-        rod += 1
-        time.sleep(0.5)
+        rod -= 1
+        time.sleep(0.7)

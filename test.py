@@ -8,9 +8,9 @@ from PIL import ImageGrab
 sleep(4)
 print(pyautogui.position())
 
-'''
+
 fish_needle = cv.imread('fish1.png', cv.IMREAD_COLOR)
-alert_needle = cv.imread('alert.png', cv.IMREAD_COLOR)
+alert_needle = cv.imread('alert1.png', cv.IMREAD_COLOR)
 jump_needle = cv.imread('jump1.png', cv.IMREAD_COLOR)
 
 fish_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
@@ -30,4 +30,4 @@ fmin_val, fmax_val, fmin_loc, fmax_loc = cv.minMaxLoc(result_fish)
 
 print("alert value: ", amax_val)
 print("fish value: ", fmax_val)
-'''
+alert_ss.show()
