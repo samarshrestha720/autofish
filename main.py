@@ -14,6 +14,8 @@ fish_needle = cv.imread('fish.png', cv.IMREAD_COLOR)
 alert_needle = cv.imread('alert.png', cv.IMREAD_COLOR)
 jump_needle = cv.imread('jump.png', cv.IMREAD_COLOR)
 
+rod = 0
+
 
 def checkJump():
     jump_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
@@ -25,7 +27,19 @@ def checkJump():
     return jmax_val
 
 
-rod = 26
+def fixRod():
+    pyautogui.click(1749, 607)  # click the bag icon
+    time.sleep(0.5)
+    pyautogui.click(1370, 516)  # click repair icon
+    time.sleep(0.5)
+    pyautogui.click(1040, 805)  # click the 500 money icon
+    time.sleep(0.5)
+    pyautogui.click(833, 811)  # click yes
+    time.sleep(0.5)
+    pyautogui.click(833, 811)  # get out of bag
+    time.sleep(0.5)
+
+
 while True:
     # grabbing ss of the fish and alert
     fish_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
@@ -47,16 +61,7 @@ while True:
     fmin_val, fmax_val, fmin_loc, fmax_loc = cv.minMaxLoc(result_fish)
 
     if (rod == 35):
-        pyautogui.click(1749, 607)  # click the bag icon
-        time.sleep(0.5)
-        pyautogui.click(1370, 516)  # click repair icon
-        time.sleep(0.5)
-        pyautogui.click(1040, 805)  # click the 500 money icon
-        time.sleep(0.5)
-        pyautogui.click(1030, 818)  # click yes
-        time.sleep(0.3)
-        pyautogui.click(959, 659)  # get out of bag
-        time.sleep(0.3)
+        fixRod()
         rod = 0
 
     if (fmax_val > 0.6):  # check if fish icon matches
