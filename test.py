@@ -3,10 +3,11 @@ from time import sleep
 import cv2 as cv
 import numpy as np
 from PIL import ImageGrab
-
+from random import randint
 
 sleep(4)
 print(pyautogui.position())
+#print(randint(1358, 1706))
 '''
 store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
 store_ss = ImageGrab.grab(bbox=(1268, 745, 1750, 913))

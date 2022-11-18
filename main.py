@@ -3,7 +3,7 @@ from PIL import ImageGrab
 import time
 import cv2 as cv
 import numpy as np
-from random import random
+from random import randint, uniform
 
 
 time.sleep(5)
@@ -18,10 +18,10 @@ store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
 
 rod = 90
 
-ax1 = 1013
-ay1 = 201
-ax2 = 1094
-ay2 = 302
+ax1 = 766
+ay1 = 213
+ax2 = 851
+ay2 = 309
 
 
 def checkJump():
@@ -87,14 +87,15 @@ while True:
         if (amax_val > 0.6):  # check if fish is hooked
             print("Clicked reel/fish button!")
             # click the reel out(fish) button
-            pyautogui.click(random(1358, 1706), random(588, 943))
-            time.sleep(random(0.1785714285714286, 0.2083333333333333))
+            pyautogui.click(randint(1556, 1707), randint(806, 930))
+            time.sleep(uniform(0.1785714285714286, 0.2083333333333333))
+
         else:
             #print("Waiting for Fish.....")
             pass
     elif (checkJump() > 0.5):
         print("Throw hook clicked!")
-        pyautogui.click(random(1446, 1536), random(
+        pyautogui.click(randint(1446, 1536), randint(
             659, 735))  # click the throw hook button
         time.sleep(2)
     elif (checkStore() > 0.6):
