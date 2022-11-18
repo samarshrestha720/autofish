@@ -3,10 +3,11 @@ from PIL import ImageGrab
 import time
 import cv2 as cv
 import numpy as np
+from random import random
 
 
 time.sleep(5)
-
+print("Started")
 # print(pyautogui.position())
 
 # load on what to search on ss
@@ -16,6 +17,11 @@ jump_needle = cv.imread('jump1.png', cv.IMREAD_COLOR)
 store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
 
 rod = 90
+
+ax1 = 1013
+ay1 = 201
+ax2 = 1094
+ay2 = 302
 
 
 def checkJump():
@@ -39,6 +45,7 @@ def checkStore():
 
 
 def fixRod():
+    print("fixRod called!")
     pyautogui.click(1749, 607)  # click the bag icon
     time.sleep(1)
     pyautogui.click(1370, 516)  # click repair icon
@@ -54,7 +61,7 @@ def fixRod():
 while True:
     # grabbing ss of the fish and alert
     fish_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
-    alert_ss = ImageGrab.grab(bbox=(830, 311, 1040, 438))
+    alert_ss = ImageGrab.grab(bbox=(ax1, ay1, ax2, ay2))
 
     # converting to openCv readable format
     fish_haystack = np.array(fish_ss)
@@ -73,20 +80,29 @@ while True:
 
     if (rod == 0):
         fixRod()
-        rod = 45
+        rod = 90
 
     if (fmax_val > 0.6):  # check if fish icon matches
-        print("In Water !!")
-        print(amax_val)
+        #print("In Water !!")
         if (amax_val > 0.6):  # check if fish is hooked
-            print("Fish hooked!!! Reel in Fast!!")
-            pyautogui.click(1581, 827)  # click the reel out(fish) button
+            print("Clicked reel/fish button!")
+            # click the reel out(fish) button
+            pyautogui.click(random(1358, 1706), random(588, 943))
+            time.sleep(random(0.1785714285714286, 0.2083333333333333))
         else:
-            print("Waiting for Fish.....")
-    elif (checkJump() > 0.6):
-        print("Throwing hook in water!")
-        pyautogui.click(1466, 693)  # click the throw hook button
-    elif (checkStore() > 0.7):
+            #print("Waiting for Fish.....")
+            pass
+    elif (checkJump() > 0.5):
+        print("Throw hook clicked!")
+        pyautogui.click(random(1446, 1536), random(
+            659, 735))  # click the throw hook button
+        time.sleep(2)
+    elif (checkStore() > 0.6):
         pyautogui.click(1429, 848)
-        rod -= 1
+        print("Store clicked!")
         time.sleep(0.7)
+        rod -= 1
+        print(rod)
+        if (rod == 0):
+            fixRod()
+            rod = 90

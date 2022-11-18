@@ -11,5 +11,5 @@ cv.TM_SQDIFF_NORMED -- use this mode for alert -> minvalue is accurate
 cv.TM_CCOEFF_NORMED -- use this mode for jump/fish -> maxvalue is accurate
 
 Fish Loctions ALERT cordinates:
-(848, 291, 1000, 397) -- FishingLocation\atlantic.png
+(830, 311, 1040, 438) -- FishingLocation\atlantic.png
 (902, 289, 964, 389) -- FishingLocation\home.png
