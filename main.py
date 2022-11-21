@@ -12,16 +12,16 @@ print("Started")
 
 # load on what to search on ss
 fish_needle = cv.imread('fish1.png', cv.IMREAD_COLOR)
-alert_needle = cv.imread('alert.png', cv.IMREAD_COLOR)
+alert_needle = cv.imread('alert2.png', cv.IMREAD_GRAYSCALE)
 jump_needle = cv.imread('jump1.png', cv.IMREAD_COLOR)
 store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
 
 rod = 90
 
-ax1 = 766
-ay1 = 213
-ax2 = 851
-ay2 = 309
+ax1 = 896
+ay1 = 182
+ax2 = 982
+ay2 = 316
 
 
 def checkJump():
@@ -67,7 +67,7 @@ while True:
     fish_haystack = np.array(fish_ss)
     fish_haystack = cv.cvtColor(fish_haystack, cv.COLOR_RGB2BGR)
     alert_haystack = np.array(alert_ss)
-    alert_haystack = cv.cvtColor(alert_haystack, cv.COLOR_RGB2BGR)
+    alert_haystack = cv.cvtColor(alert_haystack, cv.COLOR_RGB2GRAY)
 
     # match the image --- "find needle in the haystack"
     result_fish = cv.matchTemplate(
@@ -84,21 +84,25 @@ while True:
 
     if (fmax_val > 0.6):  # check if fish icon matches
         #print("In Water !!")
-        if (amax_val > 0.6):  # check if fish is hooked
+        if (amax_val > 0.5):  # check if fish is hooked
             print("Clicked reel/fish button!")
             # click the reel out(fish) button
             pyautogui.click(randint(1556, 1707), randint(806, 930))
-            time.sleep(uniform(0.1785714285714286, 0.2083333333333333))
+            time.sleep(uniform(0.13, 0.1785714285714286))
+            pyautogui.click(randint(1556, 1707), randint(806, 930))
+            # time.sleep(uniform(0.13, 0.1785714285714286))
+            # pyautogui.click(randint(1556, 1707), randint(806, 930))
 
         else:
             #print("Waiting for Fish.....")
+            # print(amax_val)
             pass
-    elif (checkJump() > 0.5):
+    elif (checkJump() > 0.57):
         print("Throw hook clicked!")
         pyautogui.click(randint(1446, 1536), randint(
             659, 735))  # click the throw hook button
         time.sleep(2)
-    elif (checkStore() > 0.6):
+    elif (checkStore() > 0.7):
         pyautogui.click(1429, 848)
         print("Store clicked!")
         time.sleep(0.7)
