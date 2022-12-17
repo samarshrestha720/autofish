@@ -17,11 +17,12 @@ jump_needle = cv.imread('jump1.png', cv.IMREAD_COLOR)
 store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
 
 rod = 90
+count = 0
 
-ax1 = 896
-ay1 = 182
-ax2 = 982
-ay2 = 316
+ax1 = 869
+ay1 = 333
+ax2 = 988
+ay2 = 454
 
 
 def checkJump():
@@ -78,13 +79,9 @@ while True:
     amin_val, amax_val, amin_loc, amax_loc = cv.minMaxLoc(result_alert)
     fmin_val, fmax_val, fmin_loc, fmax_loc = cv.minMaxLoc(result_fish)
 
-    if (rod == 0):
-        fixRod()
-        rod = 90
-
     if (fmax_val > 0.6):  # check if fish icon matches
         #print("In Water !!")
-        if (amax_val > 0.5):  # check if fish is hooked
+        if (amax_val > 0.6):  # check if fish is hooked
             print("Clicked reel/fish button!")
             # click the reel out(fish) button
             pyautogui.click(randint(1556, 1707), randint(806, 930))
@@ -101,13 +98,15 @@ while True:
         print("Throw hook clicked!")
         pyautogui.click(randint(1446, 1536), randint(
             659, 735))  # click the throw hook button
+        count += 1
         time.sleep(2)
+        if (count > 3):
+            fixRod()
+            count = 0
     elif (checkStore() > 0.7):
         pyautogui.click(1429, 848)
         print("Store clicked!")
         time.sleep(0.7)
         rod -= 1
-        print(rod)
-        if (rod == 0):
-            fixRod()
-            rod = 90
+        count = 0
+        print(rod, count)
