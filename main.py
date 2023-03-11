@@ -22,14 +22,19 @@ start_time = datetime.now()
 rod = 0
 count = 0
 
-ax1 = 896
-ay1 = 157
-ax2 = 969
-ay2 = 244
+cord1 = "(x=880, y=132)"
+cord2 = "(x=965, y=228)"
+
+# get coordinates from cord1&cord2 and place
+ax1 = int(cord1[cord1.find("x=")+2:cord1.find(",")])
+ay1 = int(cord1[cord1.find("y=")+2:cord1.find(")")])
+ax2 = int(cord2[cord2.find("x=")+2:cord2.find(",")])
+ay2 = int(cord2[cord2.find("y=")+2:cord2.find(")")])
 
 
 def checkJump():
-    jump_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
+    #jump_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
+    jump_ss = ImageGrab.grab(bbox=(1509, 763, 1731, 976))
     jump_haystack = np.array(jump_ss)
     jump_haystack = cv.cvtColor(jump_haystack, cv.COLOR_RGB2BGR)
     result_jump = cv.matchTemplate(
@@ -66,8 +71,10 @@ while True:
     elapsed_time = datetime.now()-start_time
     if (elapsed_time.total_seconds() > 900):
         time.sleep(899)
+        start_time = datetime.now()
     # grabbing ss of the fish and alert
-    fish_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
+    #fish_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
+    fish_ss = ImageGrab.grab(bbox=(1509, 763, 1731, 976))
     alert_ss = ImageGrab.grab(bbox=(ax1, ay1, ax2, ay2))
 
     # converting to openCv readable format
@@ -90,9 +97,10 @@ while True:
         if (amax_val > 0.6):  # check if fish is hooked
             print("Clicked reel/fish button!")
             # click the reel out(fish) button
-            pyautogui.click(randint(1556, 1707), randint(806, 930))
+            #pyautogui.click(randint(1556, 1707), randint(806, 930))
+            pyautogui.click(randint(1557, 1694), randint(811, 940))
             time.sleep(uniform(0.13, 0.1785714285714286))
-            pyautogui.click(randint(1556, 1707), randint(806, 930))
+            pyautogui.click(randint(1557, 1694), randint(811, 940))
             # time.sleep(uniform(0.13, 0.1785714285714286))
             # pyautogui.click(randint(1556, 1707), randint(806, 930))
 
@@ -104,6 +112,8 @@ while True:
         print("Throw hook clicked!")
         pyautogui.click(randint(1446, 1536), randint(
             659, 735))  # click the throw hook button
+        pyautogui.click(randint(1452, 1528), randint(
+            659, 736))
         count += 1
         time.sleep(2)
         if (count > 2):
