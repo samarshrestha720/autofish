@@ -1,20 +1,22 @@
-import pyautogui
+from pyautogui import position
 from time import sleep
-import cv2 as cv
-import numpy as np
-from PIL import ImageGrab
-from random import randint
+# import cv2 as cv
+# import numpy as np
+# from PIL import ImageGrab
+# from pytesseract import pytesseract
 
 sleep(4)
-print(pyautogui.position())
-#print(randint(1358, 1706))
+print(position())
+
 '''
-store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
-store_ss = ImageGrab.grab(bbox=(1268, 745, 1750, 913))
-store_haystack = np.array(store_ss)
-store_haystack = cv.cvtColor(store_haystack, cv.COLOR_RGB2BGR)
-result_store = cv.matchTemplate(
-    store_haystack, store_needle, cv.TM_CCOEFF_NORMED)
-smin_val, smax_val, smin_loc, smax_loc = cv.minMaxLoc(result_store)
-print(smax_val)
+name_needle = cv.imread('embr.png', cv.IMREAD_COLOR)
+name_ss = ImageGrab.grab(bbox=(815, 374, 1081, 575))
+name_haystack = np.array(name_ss)
+name_haystack = cv.cvtColor(name_haystack, cv.COLOR_RGB2BGR)
+result_name = cv.matchTemplate(
+    name_haystack, name_needle, cv.TM_CCOEFF_NORMED)
+smin_val, smax_val, smin_loc, smax_loc = cv.minMaxLoc(result_name)
+print(smax_val, smin_val)
+print(smax_loc)
+name_ss.show()
 '''
