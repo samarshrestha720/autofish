@@ -4,9 +4,10 @@ import time
 import cv2 as cv
 import numpy as np
 from random import randint, uniform
+from datetime import datetime
 
 
-time.sleep(5)
+time.sleep(2)
 print("Started")
 # print(pyautogui.position())
 
@@ -14,15 +15,17 @@ print("Started")
 fish_needle = cv.imread('fish1.png', cv.IMREAD_COLOR)
 alert_needle = cv.imread('alert2.png', cv.IMREAD_GRAYSCALE)
 jump_needle = cv.imread('jump1.png', cv.IMREAD_COLOR)
-store_needle = cv.imread('store.png', cv.IMREAD_COLOR)
+store_needle = cv.imread('store1.png', cv.IMREAD_COLOR)
 
-rod = 90
+start_time = datetime.now()
+
+rod = 0
 count = 0
 
-ax1 = 869
-ay1 = 333
-ax2 = 988
-ay2 = 454
+ax1 = 896
+ay1 = 157
+ax2 = 969
+ay2 = 244
 
 
 def checkJump():
@@ -36,7 +39,7 @@ def checkJump():
 
 
 def checkStore():
-    store_ss = ImageGrab.grab(bbox=(1268, 745, 1750, 913))
+    store_ss = ImageGrab.grab(bbox=(1261, 818, 1728, 896))
     store_haystack = np.array(store_ss)
     store_haystack = cv.cvtColor(store_haystack, cv.COLOR_RGB2BGR)
     result_store = cv.matchTemplate(
@@ -48,18 +51,21 @@ def checkStore():
 def fixRod():
     print("fixRod called!")
     pyautogui.click(1749, 607)  # click the bag icon
-    time.sleep(1)
+    time.sleep(1.5)
     pyautogui.click(1370, 516)  # click repair icon
-    time.sleep(1)
+    time.sleep(1.5)
     pyautogui.click(1040, 805)  # click the 500 money icon
-    time.sleep(1)
+    time.sleep(1.5)
     pyautogui.click(833, 811)  # click yes
-    time.sleep(1)
+    time.sleep(1.5)
     pyautogui.click(833, 811)  # get out of bag
     time.sleep(1)
 
 
 while True:
+    elapsed_time = datetime.now()-start_time
+    if (elapsed_time.total_seconds() > 900):
+        time.sleep(899)
     # grabbing ss of the fish and alert
     fish_ss = ImageGrab.grab(bbox=(1399, 688, 1825, 1100))
     alert_ss = ImageGrab.grab(bbox=(ax1, ay1, ax2, ay2))
@@ -79,7 +85,7 @@ while True:
     amin_val, amax_val, amin_loc, amax_loc = cv.minMaxLoc(result_alert)
     fmin_val, fmax_val, fmin_loc, fmax_loc = cv.minMaxLoc(result_fish)
 
-    if (fmax_val > 0.6):  # check if fish icon matches
+    if (fmax_val > 0.7):  # check if fish icon matches
         #print("In Water !!")
         if (amax_val > 0.6):  # check if fish is hooked
             print("Clicked reel/fish button!")
@@ -94,19 +100,19 @@ while True:
             #print("Waiting for Fish.....")
             # print(amax_val)
             pass
-    elif (checkJump() > 0.57):
+    elif (checkJump() > 0.5):
         print("Throw hook clicked!")
         pyautogui.click(randint(1446, 1536), randint(
             659, 735))  # click the throw hook button
         count += 1
         time.sleep(2)
-        if (count > 3):
+        if (count > 2):
             fixRod()
             count = 0
     elif (checkStore() > 0.7):
         pyautogui.click(1429, 848)
         print("Store clicked!")
         time.sleep(0.7)
-        rod -= 1
+        rod += 1
         count = 0
         print(rod, count)
