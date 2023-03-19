@@ -5,15 +5,15 @@ import cv2 as cv
 import numpy as np
 from random import randint, uniform
 from datetime import datetime
+from PyQt6.QtCore import QObject, pyqtSignal
 
 
-sleep(2)
-print("Started")
-# print(pyautogui.position())
+class fishy(QObject):
+    operation_signal = pyqtSignal(str)
 
-
-class fishy:
     def __init__(self):
+        super().__init__()  # call the base class constructor
+
         # load on what to search on ss
         self.fish_needle = cv.imread('fish1.png', cv.IMREAD_COLOR)
         self.alert_needle = cv.imread('alert2.png', cv.IMREAD_GRAYSCALE)
@@ -27,18 +27,6 @@ class fishy:
         self.count = 0  # used to check when to trigger fixRod
         self.fixCount = 0  # record how many times fixRod has been called
 
-        # coordinates of where to check for "!" mark
-        self.cord1 = "(x=890, y=128)"
-        self.cord2 = "(x=971, y=227)"
-        # get coordinates from cord1&cord2 and place
-        self.ax1 = int(
-            self.cord1[self.cord1.find("x=")+2:self.cord1.find(",")])
-        self.ay1 = int(
-            self.cord1[self.cord1.find("y=")+2:self.cord1.find(")")])
-        self.ax2 = int(
-            self.cord2[self.cord2.find("x=")+2:self.cord2.find(",")])
-        self.ay2 = int(
-            self.cord2[self.cord2.find("y=")+2:self.cord2.find(")")])
         print("Initialization Complete!")
 
     def get_cords(self):
@@ -77,7 +65,22 @@ class fishy:
         click(833, 811)  # get out of bag
         sleep(1)
 
-    def run(self):
+    def run(self, cord1, cord2):
+        # coordinates of where to check for "!" mark
+        self.cord1 = str(cord1)
+        self.cord2 = str(cord2)
+        # get coordinates from cord1&cord2 and place
+        self.ax1 = int(
+            self.cord1[self.cord1.find("x=")+2:self.cord1.find(",")])
+        self.ay1 = int(
+            self.cord1[self.cord1.find("y=")+2:self.cord1.find(")")])
+        self.ax2 = int(
+            self.cord2[self.cord2.find("x=")+2:self.cord2.find(",")])
+        self.ay2 = int(
+            self.cord2[self.cord2.find("y=")+2:self.cord2.find(")")])
+        sleep(2)
+        print("Started!!")
+        self.operation_signal.emit(f"Started!!")
         while (self.fixCount < 4):
             '''elapsed_time = datetime.now()-start_time
             if (elapsed_time.total_seconds() > 900):
@@ -141,9 +144,11 @@ class fishy:
                 self.count = 0
                 self.fixCount = 0
                 print(self.rod, self.fixCount)
+                self.operation_signal.emit(f"Fish:{self.rod}")
+        if (self.fixCount == 4):
+            print("STOPPED!! FIX ROD CALLED TOO MANY TIMES!")
+            self.operation_signal.emit(
+                "STOPPED!! FIX ROD CALLED TOO MANY TIMES!")
 
-
-a = fishy()
-a.run()
-
-print("STOPPED!! FIX ROD CALLED TOO MANY TIMES!")
+    def stop(self):
+        self.fixCount = 5
